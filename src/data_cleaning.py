@@ -1,5 +1,5 @@
 import pandas as pd
-import os
+
 
 def load_data(file_path):
     """Load the dataset from the specified file path."""
