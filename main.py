@@ -1,7 +1,9 @@
+# Import the dataset and related variables directly from the analysis script
 import sys
 import os
 sys.path.append(os.path.abspath('./src'))
-
+from statsmodels.formula.api import ols
+import statsmodels.api as sm
 from data_cleaning import (
     load_data,
     drop_columns_with_many_missing,
@@ -11,13 +13,10 @@ from data_cleaning import (
     check_group_balance
 )
 from data_analysis import (
-    perform_anova,
+    perform_welchs_anova,
     plot_boxplot,
     plot_interaction
 )
-from statsmodels.formula.api import ols
-import statsmodels.api as sm
-
 
 def main() -> None:
     """
@@ -56,7 +55,9 @@ def main() -> None:
     # Question 1: Analyze BDNF_N
     print("\n--- Question 1: BDNF_N Analysis ---")
     bdnf_data = cleaned_data[['Genotype', 'Treatment', 'BDNF_N']].dropna()
-    bdnf_f_stat, bdnf_p_value = perform_anova(bdnf_data, 'BDNF_N', 'Treatment')
+    bdnf_f_stat, bdnf_p_value = perform_welchs_anova(bdnf_data, 'BDNF_N', 'Treatment')
+
+
     print(f"ANOVA Results: F-statistic = {bdnf_f_stat:.4f}, P-value = {bdnf_p_value:.4f}")
 
     plot_boxplot(
@@ -87,7 +88,7 @@ def main() -> None:
 
     print("\n=== Process Completed Successfully ===")
 
-
 if __name__ == "__main__":
     main()
+
 
