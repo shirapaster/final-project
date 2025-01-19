@@ -132,13 +132,13 @@ pip install -r requirements.txt
 ## Authors
 This project was collaboratively developed by two students as part of an academic requirement:
 
-- **Student 1**: Responsible for data analysis and visualizations.
-- **Student 2**: Focused on data cleaning and testing.
+- **Shira**: Responsible for data analysis and visualizations.
+- **eliana**: Focused on data cleaning and testing.
 
 ---
 
 ## Contact Information
 For questions, feedback, or collaboration opportunities, please contact:
-- **Email:** [Your Team Email Address]
-- **GitHub Repository:** [Repository URL]
+- **Email:** shirapaster@gmail.com
+- **GitHub Repository:** https://github.com/shirapaster/final-project
 
