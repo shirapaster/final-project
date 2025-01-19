@@ -1,21 +1,21 @@
 import unittest
 import pandas as pd
-import scipy.stats as stats
-from statsmodels.formula.api import ols
-from statsmodels.stats.anova import anova_lm
 import os
+from pandas import DataFrame
+
 
 # Import the dataset and related variables directly from the analysis script
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+
 from data_analysis import data, bdnf_anova, pcreb_anova_table
 
-class TestAnalysis(unittest.TestCase):
 
-    def setUp(self):
+class TestAnalysis(unittest.TestCase):
+    def setUp(self) -> None:
         """Set up a mock dataset for testing."""
         # Mock dataset with valid groups for positive test cases
-        self.mock_data = pd.DataFrame({
+        self.mock_data: DataFrame = pd.DataFrame({
             'MouseID': ['M1', 'M2', 'M3', 'M4', 'M5', 'M6'],
             'Genotype': ['Control', 'Control', 'Ts65Dn', 'Ts65Dn', 'Control', 'Ts65Dn'],
             'Treatment': ['Saline', 'Memantine', 'Saline', 'Memantine', 'Memantine', 'Saline'],
@@ -23,7 +23,7 @@ class TestAnalysis(unittest.TestCase):
             'pCREB_N': [0.3, 0.6, 0.4, 0.9, 0.5, 0.8]
         })
 
-    def test_anova_bdnf(self):
+    def test_anova_bdnf(self) -> None:
         """Test ANOVA for BDNF_N levels (Positive Test Case)."""
         # Use the ANOVA results from the imported function
         self.assertIsInstance(bdnf_anova.statistic, float)
@@ -33,7 +33,7 @@ class TestAnalysis(unittest.TestCase):
         self.assertGreaterEqual(bdnf_anova.pvalue, 0)
         self.assertLessEqual(bdnf_anova.pvalue, 1)
 
-    def test_twoway_anova_pcreb(self):
+    def test_twoway_anova_pcreb(self) -> None:
         """Test two-way ANOVA for pCREB_N levels (Positive Test Case)."""
         # Use the ANOVA table from the imported function
         self.assertFalse(pcreb_anova_table.empty)
@@ -42,25 +42,25 @@ class TestAnalysis(unittest.TestCase):
         self.assertIn('C(Genotype):C(Treatment)', pcreb_anova_table.index)
         
         # Boundary Test: Ensure P-value is valid
-        interaction_p_value = pcreb_anova_table.loc['C(Genotype):C(Treatment)', 'PR(>F)']
+        interaction_p_value: float = pcreb_anova_table.loc['C(Genotype):C(Treatment)', 'PR(>F)']
         self.assertGreaterEqual(interaction_p_value, 0)
         self.assertLessEqual(interaction_p_value, 1)
 
-    def test_load_data(self):
+    def test_load_data(self) -> None:
         """Test loading the main dataset (Positive Test Case)."""
         # Use the dataset from the imported script
-        self.assertIsInstance(data, pd.DataFrame)
+        self.assertIsInstance(data, DataFrame)
         
         # Ensure the dataset contains required columns
-        required_columns = ['MouseID', 'Genotype', 'Treatment', 'BDNF_N', 'pCREB_N']
+        required_columns: list[str] = ['MouseID', 'Genotype', 'Treatment', 'BDNF_N', 'pCREB_N']
         for column in required_columns:
             self.assertIn(column, data.columns)
 
-    def test_visualization_files(self):
+    def test_visualization_files(self) -> None:
         """Test if visualization files are created successfully (Error Test Case)."""
         # Simulate saving of plots
-        bdnf_plot_path = './BDNF_N_boxplot.png'
-        pcreb_plot_path = './pCREB_N_interaction_plot.png'
+        bdnf_plot_path: str = './BDNF_N_boxplot.png'
+        pcreb_plot_path: str = './pCREB_N_interaction_plot.png'
         
         # Create dummy files for testing
         with open(bdnf_plot_path, 'w') as f:
@@ -76,6 +76,6 @@ class TestAnalysis(unittest.TestCase):
         os.remove(bdnf_plot_path)
         os.remove(pcreb_plot_path)
 
+
 if __name__ == '__main__':
     unittest.main()
-

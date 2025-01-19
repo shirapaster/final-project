@@ -9,7 +9,7 @@ This project investigates the impact of treatment (Saline or Memantine) on the e
 
 2. **Interaction Between Treatment and Genotype for pCREB_N Levels:**
    - Does the effect of treatment differ between healthy and sick mice for pCREB_N levels?
-
+#להוסיף את שאלת המחקר הגדולה
 ---
 
 ## Project Structure
@@ -39,13 +39,13 @@ final-project/
 
 ### Installation Steps
 1. Clone the repository:
-   ```bash
+   ```power shell
    git clone <repository_url>
    cd final-project
    ```
 
 2. Install the required dependencies:
-   ```bash
+   ```power shell
    pip install -r requirements.txt
    ```
 
@@ -116,7 +116,7 @@ To ensure the project runs smoothly, the following Python libraries must be inst
 - `unittest`: Testing framework.
 
 To install all dependencies, run:
-```bash
+```power shell
 pip install -r requirements.txt
 ```
 
