@@ -1,6 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.abspath('./src'))
+
 from data_cleaning import (
     load_data,
     drop_columns_with_many_missing,
@@ -16,6 +17,7 @@ from data_analysis import (
 )
 from statsmodels.formula.api import ols
 import statsmodels.api as sm
+
 
 def main() -> None:
     """
@@ -58,14 +60,13 @@ def main() -> None:
     print(f"ANOVA Results: F-statistic = {bdnf_f_stat:.4f}, P-value = {bdnf_p_value:.4f}")
 
     plot_boxplot(
-    bdnf_data,
-    x='Treatment',
-    y='BDNF_N',
-    hue='Genotype',
-    title='BDNF_N Levels by Treatment and Genotype',
-    filename='BDNF_N_boxplot.png'
-)
-
+        bdnf_data,
+        x='Treatment',
+        y='BDNF_N',
+        hue='Genotype',
+        title='BDNF_N Levels by Treatment and Genotype',
+        filename='BDNF_N_boxplot.png'
+    )
 
     # Question 2: Analyze pCREB_N
     print("\n--- Question 2: pCREB_N Analysis ---")
@@ -85,6 +86,7 @@ def main() -> None:
     )
 
     print("\n=== Process Completed Successfully ===")
+
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,4 @@
-from typing import Union
+
 import pandas as pd
 from pandas import DataFrame
 from statsmodels.formula.api import ols
@@ -68,9 +68,10 @@ def main() -> None:
 
     # --- Question 1: BDNF_N Analysis ---
     bdnf_data = data[['Genotype', 'Treatment', 'BDNF_N']].dropna()
-    bdnf_anova = perform_anova(bdnf_data, 'BDNF_N', 'Treatment')
     print("\n--- Question 1: BDNF_N Analysis ---")
-    print(f"ANOVA Results: F-statistic = {bdnf_anova.statistic:.4f}, P-value = {bdnf_anova.pvalue:.4f}")
+    bdnf_f_stat, bdnf_p_value = perform_anova(bdnf_data, 'BDNF_N', 'Treatment')
+    print(f"ANOVA Results: F-statistic = {bdnf_f_stat:.4f}, P-value = {bdnf_p_value:.4f}")
+
 
     plot_boxplot(
         bdnf_data,
