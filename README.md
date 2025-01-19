@@ -1,7 +1,7 @@
 # Final Project: Data Analysis for Protein Levels
 
 ## Overview
-This project investigates the impact of treatment (Saline or Memantine) on the expression levels of two proteins, BDNF_N and pCREB_N, in healthy and sick mice. This analysis aims to understand whether treatments have significant effects on these proteins and whether the effects vary by genotype.
+This project investigates the impact of treatment (Saline or Memantine) on the expression levels of two proteins, BDNF_N and pCREB_N, in healthy and sick mice. This analysis aims to understand whether treatments have significant effects on these proteins and whether the effects vary by genotype. We wanted to understand the big research question: whether it affects or not' on all the proteins in general/ but' we understood that it will be problematic to test all the proteins, so we chose tow of them. these two are very important for the body, so that is why we chose them.
 
 ### Key Questions
 1. **Effect of Treatment on BDNF_N Levels:**
@@ -9,7 +9,7 @@ This project investigates the impact of treatment (Saline or Memantine) on the e
 
 2. **Interaction Between Treatment and Genotype for pCREB_N Levels:**
    - Does the effect of treatment differ between healthy and sick mice for pCREB_N levels?
-#להוסיף את שאלת המחקר הגדולה
+
 ---
 
 ## Project Structure
@@ -57,14 +57,14 @@ final-project/
 
 ### Step 1: Data Cleaning
 To preprocess the dataset, run the cleaning script:
-```bash
+```powershell
 python src/data_cleaning.py
 ```
 This generates a cleaned dataset `cleaned_relevant_data.csv` in the `src/` directory.
 
 ### Step 2: Data Analysis
 To perform statistical analysis, run the analysis script:
-```bash
+```powershell
 python src/data_analysis.py
 ```
 The output includes:
@@ -84,7 +84,7 @@ The project includes unit tests to validate the correctness of the cleaning and 
 
 ### Running the Tests
 To execute all tests, use the following command:
-```bash
+```powershell
 python -m unittest discover -s test
 ```
 
@@ -116,7 +116,7 @@ To ensure the project runs smoothly, the following Python libraries must be inst
 - `unittest`: Testing framework.
 
 To install all dependencies, run:
-```power shell
+```powershell
 pip install -r requirements.txt
 ```
 
@@ -132,8 +132,8 @@ pip install -r requirements.txt
 ## Authors
 This project was collaboratively developed by two students as part of an academic requirement:
 
-- **Shira**: Responsible for data analysis and visualizations.
-- **eliana**: Focused on data cleaning and testing.
+- **Shira pasternak**: Responsible for data analysis and visualizations.
+- **eliana heitner**: Focused on data cleaning and testing.
 
 ---
 
