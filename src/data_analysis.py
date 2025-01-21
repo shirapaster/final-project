@@ -112,60 +112,28 @@ def plot_interaction(data: DataFrame, x: str, y: str, hue: str, title: str, file
     except Exception as e:
         print(f"Error while creating the interaction plot: {e}")
         raise
+    
+def perform_two_way_anova(data: pd.DataFrame, dependent_var: str, factor1: str, factor2: str) -> pd.DataFrame:
+    """
+    Perform Two-Way ANOVA including interaction between two factors.
 
-def main() -> None:
-    """Main function to perform data analysis."""
+    Args:
+        data (pd.DataFrame): Dataset to analyze.
+        dependent_var (str): Name of the dependent variable.
+        factor1 (str): Name of the first factor.
+        factor2 (str): Name of the second factor.
+
+    Returns:
+        pd.DataFrame: ANOVA results table.
+    """
     try:
-        # Load data
-        data_path = './src/cleaned_relevant_data.csv'
-        data = load_data(data_path)
-
-        print("Dataset loaded successfully. Here's a preview:")
-        print(data.head())
-
-        # --- Question 1: BDNF_N Analysis ---
-        bdnf_data = data[['Genotype', 'Treatment', 'BDNF_N']].dropna()
-        print("\n--- Question 1: BDNF_N Analysis ---")
-
-        # Check normality
-        check_normality(bdnf_data, 'BDNF_N', 'Treatment')
-
-        # Check homogeneity of variances
-        check_homogeneity(bdnf_data, 'BDNF_N', 'Treatment')
-
-        # Perform Welch's ANOVA
-        print("\n--- Performing Welch's ANOVA ---")
-        bdnf_anova_results = perform_welchs_anova(bdnf_data, 'BDNF_N', 'Treatment')
-        print(bdnf_anova_results)
-
-        plot_boxplot(
-            bdnf_data,
-            x='Treatment',
-            y='BDNF_N',
-            hue='Genotype',
-            title='BDNF_N Levels by Treatment and Genotype',
-            filename='BDNF_N_boxplot.png'
-        )
-
-        # --- Question 2: pCREB_N Analysis ---
-        pcreb_data = data[['Genotype', 'Treatment', 'pCREB_N']].dropna()
-        pcreb_formula = 'pCREB_N ~ C(Genotype) * C(Treatment)'
-        pcreb_model = ols(pcreb_formula, data=pcreb_data).fit()
-        pcreb_anova_table = anova_lm(pcreb_model, typ=2)
-        print("\n--- Question 2: pCREB_N Analysis ---")
-        print(pcreb_anova_table)
-
-        plot_interaction(
-            pcreb_data,
-            x='Treatment',
-            y='pCREB_N',
-            hue='Genotype',
-            title='Interaction Effect: pCREB_N Levels by Treatment and Genotype',
-            filename='pCREB_N_interaction_plot.png'
-        )
-
+        # Build the formula for Two-Way ANOVA
+        formula = f'{dependent_var} ~ C({factor1}) * C({factor2})'
+        # Fit the model
+        model = ols(formula, data=data).fit()
+        # Perform ANOVA
+        anova_table = anova_lm(model, typ=2)
+        return anova_table
     except Exception as e:
-        print(f"An error occurred in the main function: {e}")
-
-if __name__ == "__main__":
-    main()
+        print(f"An error occurred during Two-Way ANOVA: {e}")
+        raise

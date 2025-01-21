@@ -81,35 +81,4 @@ def save_cleaned_data(data: DataFrame, file_path: str) -> None:
     print(f"Cleaned and relevant data saved to: {file_path}")
 
 
-def main() -> None:
-    file_path = './src/Data_Cortex_Nuclear.csv'
-    cleaned_data_path = './src/cleaned_relevant_data.csv'
 
-    # Load the dataset
-    data = load_data(file_path)
-
-    # Step 1: Inspect the data
-    inspect_data(data)
-
-    # Step 2: Drop columns with many missing values
-    data_cleaned = drop_columns_with_many_missing(data, threshold=0.5)
-
-    # Step 3: Fill missing values for relevant columns by group
-    data_cleaned = fill_missing_values_by_group(data_cleaned, ['BDNF_N', 'pCREB_N'], ['Genotype', 'Treatment'])
-
-    # Step 4: Remove outliers with a wider threshold
-    data_cleaned = remove_outliers(data_cleaned, ['BDNF_N', 'pCREB_N'], factor=3)
-
-    # Step 5: Create a new focused dataset
-    relevant_columns = ['MouseID', 'Genotype', 'Treatment', 'BDNF_N', 'pCREB_N']
-    filtered_data = data_cleaned[relevant_columns]
-
-    # Step 6: Check group balance
-    check_group_balance(filtered_data)
-
-    # Step 7: Save the cleaned and filtered dataset
-    save_cleaned_data(filtered_data, cleaned_data_path)
-
-
-if __name__ == "__main__":
-    main()

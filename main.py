@@ -2,8 +2,6 @@
 import sys
 import os
 sys.path.append(os.path.abspath('./src'))
-from statsmodels.formula.api import ols
-import statsmodels.api as sm
 from data_cleaning import (
     load_data,
     drop_columns_with_many_missing,
@@ -13,7 +11,8 @@ from data_cleaning import (
     check_group_balance
 )
 from data_analysis import (
-    perform_welchs_anova,
+    perform_welchs_anova, 
+    perform_two_way_anova,
     plot_boxplot,
     plot_interaction
 )
@@ -71,20 +70,26 @@ def main() -> None:
 
     # Question 2: Analyze pCREB_N
     print("\n--- Question 2: pCREB_N Analysis ---")
-    pcreb_data = cleaned_data[['Genotype', 'Treatment', 'pCREB_N']].dropna()
-    pcreb_formula = 'pCREB_N ~ C(Genotype) * C(Treatment)'
-    pcreb_model = ols(pcreb_formula, data=pcreb_data).fit()
-    pcreb_anova_table = sm.stats.anova_lm(pcreb_model, typ=2)
-    print(pcreb_anova_table)
 
+    # Filter the data to include only relevant columns and drop rows with missing values
+    pcreb_data = cleaned_data[['Genotype', 'Treatment', 'pCREB_N']].dropna()
+
+    # Perform Two-Way ANOVA to analyze the interaction between Genotype and Treatment on pCREB_N levels
+    pcreb_anova_table = perform_two_way_anova(pcreb_data, 'pCREB_N', 'Genotype', 'Treatment')
+
+    # Print the ANOVA results table
+    print("Two-Way ANOVA Results for pCREB_N:\n", pcreb_anova_table)
+
+    # Create and save the interaction plot
     plot_interaction(
-        pcreb_data,
-        x='Treatment',
-        y='pCREB_N',
-        hue='Genotype',
-        title='Interaction Effect: pCREB_N Levels by Treatment and Genotype',
-        filename='pCREB_N_interaction_plot.png'
-    )
+    pcreb_data,  # Data to visualize
+    x='Treatment',  # Variable for the x-axis
+    y='pCREB_N',  # Dependent variable for the y-axis
+    hue='Genotype',  # Variable for grouping (hue)
+    title='Interaction Effect: pCREB_N Levels by Treatment and Genotype',  # Plot title
+    filename='pCREB_N_interaction_plot.png'  # File name for saving the plot
+)
+
     # Final Conclusion
     print("\n=== Final Conclusion ===")
     if bdnf_p_value < 0.05:
